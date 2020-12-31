@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
 class userController extends Controller
@@ -27,6 +28,21 @@ class userController extends Controller
         $data = $this->userRepository->getById($id);
 //        return $data;
         return view('single' , compact('data'));
+    }
+
+    public function delCache()
+    {
+        $res = $this->userRepository->delCache('name');
+        if ($res)
+        {
+            return back();
+        }
+    }
+
+    public function fullDelCache()
+    {
+        Cache::flush();
+        return back();
     }
 
 }

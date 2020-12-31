@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Filesystem\Cache;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -34,8 +35,20 @@ class UserRepository implements UserRepositoryInterface
         return cache()->remember($cacheKey, Carbon::now()->addHours(1), function () use ($id) {
             return $this->user::where('id', $id)->first();
         });
+
     }
 
+
+    public function delCache($order)
+    {
+        $cacheKey = $this->makeCacheKey("all_{$order}");
+        if (Cache::put($cacheKey)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
     public function makeCacheKey($key)
     {

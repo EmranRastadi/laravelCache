@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/" , [userController::class , 'index'])->name('index');
 Route::get("/single/{id}" , [userController::class , 'getById'])->name('single');
+Route::get("/delCache/" , [userController::class , 'delCache'])->name('delCache');
+Route::get("/fulldel/" , [userController::class , 'fullDelCache'])->name('fullDel');
